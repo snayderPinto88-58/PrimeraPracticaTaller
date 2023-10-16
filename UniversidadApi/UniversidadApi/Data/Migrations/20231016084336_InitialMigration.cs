@@ -69,6 +69,26 @@ namespace UniversidadApi.Data.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "materias",
+                columns: table => new
+                {
+                    Id_materia = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    nombreMateria = table.Column<string>(type: "text", nullable: false),
+                    Id_docente = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_materias", x => x.Id_materia);
+                    table.ForeignKey(
+                        name: "FK_materias_docentes_Id_docente",
+                        column: x => x.Id_docente,
+                        principalTable: "docentes",
+                        principalColumn: "Id_docente",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_docentes_Id_universidad",
                 table: "docentes",
@@ -78,15 +98,23 @@ namespace UniversidadApi.Data.Migrations
                 name: "IX_estudiantes_Id_universidad",
                 table: "estudiantes",
                 column: "Id_universidad");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_materias_Id_docente",
+                table: "materias",
+                column: "Id_docente");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "docentes");
+                name: "estudiantes");
 
             migrationBuilder.DropTable(
-                name: "estudiantes");
+                name: "materias");
+
+            migrationBuilder.DropTable(
+                name: "docentes");
 
             migrationBuilder.DropTable(
                 name: "universidad");

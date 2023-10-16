@@ -14,5 +14,6 @@ namespace UniversidadApi.Context
         public DbSet<Estudiantes> estudiantes { get; set; }
         public DbSet<Docentes> docentes { get; set; }
         public DbSet<Universidad> universidad { get; set; }
+        public DbSet<Materia> materias { get; set; }
     }
 }

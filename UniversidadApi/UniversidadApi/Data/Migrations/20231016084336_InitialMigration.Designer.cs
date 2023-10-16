@@ -11,7 +11,7 @@ using UniversidadApi.Context;
 namespace UniversidadApi.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230913140601_InitialMigration")]
+    [Migration("20231016084336_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -94,6 +94,28 @@ namespace UniversidadApi.Data.Migrations
                     b.ToTable("estudiantes");
                 });
 
+            modelBuilder.Entity("UniversidadApi.Models.Materia", b =>
+                {
+                    b.Property<int>("Id_materia")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id_materia"));
+
+                    b.Property<int>("Id_docente")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("nombreMateria")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id_materia");
+
+                    b.HasIndex("Id_docente");
+
+                    b.ToTable("materias");
+                });
+
             modelBuilder.Entity("UniversidadApi.Models.Universidad", b =>
                 {
                     b.Property<int>("Id_universidad")
@@ -131,6 +153,17 @@ namespace UniversidadApi.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Universidad");
+                });
+
+            modelBuilder.Entity("UniversidadApi.Models.Materia", b =>
+                {
+                    b.HasOne("UniversidadApi.Models.Docentes", "Docentes")
+                        .WithMany()
+                        .HasForeignKey("Id_docente")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Docentes");
                 });
 #pragma warning restore 612, 618
         }

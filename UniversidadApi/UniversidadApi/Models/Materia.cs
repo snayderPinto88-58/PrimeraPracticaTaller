@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace UniversidadApi.Models
 {
-    public class Materiacs
+    public class Materia
     {
         [Key]
         public int Id_materia { get; set; }
